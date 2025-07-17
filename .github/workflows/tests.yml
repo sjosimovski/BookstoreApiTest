@@ -2,49 +2,34 @@ name: API Tests
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ master ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ master ]
 
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
 
-    - name: Restore dependencies
-      run: dotnet restore
+      - name: Restore dependencies
+        run: dotnet restore
 
-    - name: Build project
-      run: dotnet build --no-restore
+      - name: Build project
+        run: dotnet build --no-restore
 
-    - name: Run tests and generate .trx report
-      run: dotnet test --no-build --logger "trx;LogFileName=test_results.trx" --results-directory TestResults
+      - name: Run tests and generate report
+        run: dotnet test --no-build --logger "trx;LogFileName=test_results.trx" --results-directory ./TestResults
 
-    - name: Upload .trx test results as artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: trx-test-results
-        path: TestResults/test_results.trx
-
-    - name: Install ReportGenerator tool
-      run: dotnet tool install --global dotnet-reportgenerator-globaltool
-
-    - name: Generate HTML test report
-      run: |
-        reportgenerator -reports:TestResults/*.trx -targetdir:TestResultsReport -reporttypes:Html
-      env:
-        PATH: $PATH:~/.dotnet/tools
-
-    - name: Upload HTML test report
-      uses: actions/upload-artifact@v3
-      with:
-        name: html-test-report
-        path: TestResultsReport
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: TestResults
+          path: ./TestResults
