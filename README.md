@@ -89,9 +89,9 @@ BookstoreApiTests/
 
 ### Screenshots of test results/reports/artifact
 
-![GitHub Actions Test Result/Report and Artifact](images/github-actions-report.PNG)
+![GitHub Actions Test Result/Report and Artifact](Images/github-actions-report.PNG)
 
-![Local Test Results/Report](images/local-results.PNG)
+![Local Test Results/Report](Images/local-results.PNG)
 
 ## Author
 
