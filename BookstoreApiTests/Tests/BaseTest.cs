@@ -20,7 +20,7 @@ namespace BookstoreApiTests.Tests
 
             Configuration = builder.Build();
 
-            var baseUrl = Configuration["BaseUrl"];
+            var baseUrl = Configuration["BASE_URL"];
             if (string.IsNullOrEmpty(baseUrl))
             {
                 throw new Exception("BaseUrl configuration is missing.");
